@@ -1,5 +1,7 @@
 # Cold Email Bot (personal, review-first)
 
+![tests](https://github.com/chetan10510/chausar-assignment/actions/workflows/tests.yml/badge.svg)
+
 Find professional contacts with Apollo, infer a **clearly labeled** company email pattern from known work addresses, build a reviewable job-outreach workbook, and send approved messages through the Gmail API. This is a clean standalone version: it contains no real contacts, resumes, credentials, or send history.
 
 It packages the reusable discovery-to-send workflow, not the original project's Streamlit app, one-off company batch scripts, historical contact data, or follow-up tooling. No real contacts, credentials, send history, or resumes are included.
@@ -72,6 +74,32 @@ The sender attaches your resume, records Gmail message IDs, skips prior recipien
 - `send` checks `READY`, email type, company-domain match, prior sent log, and resume attachment. Without `--send`, it only prints a dry run. With `--send`, it performs Gmail OAuth on first use and records each successful send. A batch is limited to 20 rows.
 
 Run local tests after installation with `.\.venv\Scripts\python.exe -m unittest discover -s tests -v`. Tests use fake Apollo/Gmail data and do not spend credits or send messages.
+
+## Example run (the safety states in action)
+
+Using only `examples/contacts.csv` (fake data): Alex has a provided work email, Sam has
+none, so `infer` guesses one from the company pattern and labels it. The draft step then
+sets the approval state per row, and `send` without `--send` is always a dry run:
+
+```text
+$ python coldbot.py draft --contacts data/contacts_review.csv --out data/drafts.xlsx
+Saved 2 review-first drafts to data\drafts.xlsx; mark selected verified rows READY
+
+# Row states in the workbook:
+#   alex.example@example.com -> REVIEW    (provided address, human must approve)
+#   sam.sample@example.com   -> BLOCKED   (guessed address, unsendable even if marked READY)
+
+$ python coldbot.py send --input data/drafts.xlsx --limit 5     # before any approval
+Dry-run checked 0 approved rows; no messages sent
+
+$ python coldbot.py send --input data/drafts.xlsx --limit 5     # after marking Alex READY
+DRY RUN 1: alex.example@example.com | Software Engineer at Example Company | Candidate
+Dry-run checked 1 approved rows; no messages sent
+```
+
+Nothing is sent until `--send` is passed explicitly, and the sender re-checks the email
+label, company-domain match, prior-send log and resume attachment at send time — approval
+alone is not enough.
 
 ## CSV columns
 
