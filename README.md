@@ -1,7 +1,5 @@
 # Cold Email Bot (personal, review-first)
 
-![tests](https://github.com/chetan10510/chausar-assignment/actions/workflows/tests.yml/badge.svg)
-
 Find professional contacts with Apollo, infer a **clearly labeled** company email pattern from known work addresses, build a reviewable job-outreach workbook, and send approved messages through the Gmail API. This is a clean standalone version: it contains no real contacts, resumes, credentials, or send history.
 
 It packages the reusable discovery-to-send workflow, not the original project's Streamlit app, one-off company batch scripts, historical contact data, or follow-up tooling. No real contacts, credentials, send history, or resumes are included.
