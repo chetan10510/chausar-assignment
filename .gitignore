@@ -1,0 +1,15 @@
+.env
+data/
+*.pdf
+*.xlsx
+!verified_contact_directory.xlsx
+*.csv
+token*.json
+credentials*.json
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+*.pyc
+!.env.example
+!examples/*.csv

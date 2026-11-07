@@ -1,0 +1,3 @@
+Company,Domain,Name,Title,Email,Email Status,Email Type,Job Title,Job URL
+Example Company,example.com,Alex Example,Software Engineer,alex.example@example.com,provided,provided,Software Engineer,https://example.com/careers/software-engineer
+Example Company,example.com,Sam Sample,Engineering Manager,,,,Software Engineer,https://example.com/careers/software-engineer
